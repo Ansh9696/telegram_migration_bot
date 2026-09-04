@@ -39,22 +39,25 @@ async def fetch_members() -> list[dict]:
         print(f"[MemberService] Fetching from group {group_id}...")
         count = 0
 
-        async for user in client.iter_participants(group_id):
-            if not isinstance(user, User):
-                continue
-            if user.id in seen_ids:
-                continue  # already fetched from another group
+        try:
+            async for user in client.iter_participants(group_id):
+                if not isinstance(user, User):
+                    continue
+                if user.id in seen_ids:
+                    continue  # already fetched from another group
 
-            seen_ids.add(user.id)
-            count += 1
-            members.append({
-                "user_id":    user.id,
-                "username":   user.username,
-                "first_name": user.first_name,
-                "last_name":  user.last_name,
-            })
+                seen_ids.add(user.id)
+                count += 1
+                members.append({
+                    "user_id":    user.id,
+                    "username":   user.username,
+                    "first_name": user.first_name,
+                    "last_name":  user.last_name,
+                })
 
-        print(f"[MemberService]   → {count} new unique members from group {group_id}")
+            print(f"[MemberService]   → {count} new unique members from group {group_id}")
+        except Exception as e:
+            print(f"[MemberService]   ⚠️ Could not fetch from group {group_id}: {e}")
 
     print(f"[MemberService] Total unique members: {len(members)}")
     return members
