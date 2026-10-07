@@ -38,9 +38,7 @@ on:
 
   # Scheduled jobs (independent of push)
   schedule:
-    - cron: '0 9 * * *'      # fetch-and-notify  — daily 09:00 UTC
-    - cron: '*/30 * * * *'   # check-joins       — every 30 minutes
-    - cron: '0 8 * * *'      # daily-report      — daily 08:00 UTC
+    - cron: '0 9 * * *'      # fetch-and-notify  — daily 09:00 UT
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Jobs
